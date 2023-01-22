@@ -63,11 +63,22 @@ userSchema.methods.findPassword = function (plainPassword, callBack) {
 };
 
 userSchema.methods.makeToken = function (callBack) {
-  const token = jwt.sign(this._id.toHexString(), "아주비밀스러운토큰");
+  const token = jwt.sign(this._id.toHexString(), "secretToken");
   this.token = token;
   this.save((err, user) => {
     if (err) return callBack(err);
     callBack(null, user);
+  });
+};
+//statics 매소드
+userSchema.statics.findByToken = function (token, callBack) {
+  var user = this;
+  //토큰 decoded
+  jwt.verify(token, "secretToken", function (e, decoded) {
+    user.findOne({ _id: decoded, token: token }, function (err, user) {
+      if (err) return callBack(err);
+      return callBack(null, user);
+    });
   });
 };
 

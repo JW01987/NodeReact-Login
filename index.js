@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const { User } = require("./models/User");
 const config = require("./config/key");
 const cookieParser = require("cookie-parser");
+const { auth } = require("./middleware/auth");
 
 mongoose.set("strictQuery", false);
 mongoose
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-app.post("/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
   user.save((e, userInfo) => {
     if (e) return res.json({ sucsses: false, e });
@@ -28,7 +29,7 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   //요청된 이메일 찾기
   User.findOne({ email: req.body.email }, (err, userData) => {
     if (!userData) {
@@ -54,6 +55,24 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.get("/api/users/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    email: req.user.email,
+    role: req.user.role,
+    isAuth: true,
+    image: req.user.image,
+  });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ sucsses: false, err });
+    return res.status(200).json({ sucsses: true });
+  });
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
