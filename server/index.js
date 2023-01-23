@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 8080;
 const mongoose = require("mongoose");
 const { User } = require("./models/User");
 const config = require("./config/key");
@@ -19,6 +19,10 @@ app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("hello");
+});
+
+app.get("/api/hello", (req, res) => {
+  res.send("요기는 백엔드다 꺄르륵");
 });
 
 app.post("/api/users/register", (req, res) => {
