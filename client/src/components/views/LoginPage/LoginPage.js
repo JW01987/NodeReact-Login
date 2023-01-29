@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Auth from "../../../hoc/auth";
 function LoginPage() {
   const navigate = useNavigate();
   let [email, setEmail] = useState("");
@@ -38,10 +38,10 @@ function LoginPage() {
       }}
     >
       <form style={{ display: "flex", flexDirection: "column" }}>
-        <label>Email</label>
+        <label>이메일</label>
         <input type="eamil" value={email} onChange={onEmailHandler} />
 
-        <label>Password</label>
+        <label>비밀번호</label>
         <input type="password" value={password} onChange={onPasswordHandler} />
         <hr />
         <button onClick={onSubmitHandler}>Login</button>
@@ -49,5 +49,4 @@ function LoginPage() {
     </div>
   );
 }
-
-export default LoginPage;
+export default Auth(LoginPage, false);

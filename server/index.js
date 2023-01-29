@@ -73,8 +73,9 @@ app.get("/api/users/auth", auth, (req, res) => {
 
 app.get("/api/users/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    console.log(user, err);
     if (err) return res.json({ sucsses: false, err });
-    return res.status(200).json({ sucsses: true });
+    return res.status(200).send({ sucsses: true });
   });
 });
 app.listen(port, () => {
