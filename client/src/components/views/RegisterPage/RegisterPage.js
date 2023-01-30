@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../../App.css";
 import Auth from "../../../hoc/auth";
-import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -151,4 +150,4 @@ function RegisterPage() {
   );
 }
 
-export default Auth(RegisterPage, null);
+export default Auth(RegisterPage, false);

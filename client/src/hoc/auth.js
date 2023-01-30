@@ -13,33 +13,28 @@ const Auth = (ChildComponent, option, adminRoute = null) => {
     const navigate = useNavigate();
     useEffect(() => {
       axios.get("/api/users/auth").then((res) => {
-        console.log(res.data);
         if (!res.data.isAuth) {
-          console.log("++++++로그인 안함++++++");
           //로그인하지 않음
           if (option) {
             //로그인 안 했는데 로그인 한 사람 전용 페이지에 들어가려할 때
-            console.log("++++++로그인 페이지++++++");
             navigate("/login");
+          }
+        } else {
+          //로그인 함
+          if (adminRoute && !res.data.isAdmin) {
+            //로그인하고 어드민 페이지 접속, 그런데 어드민 계정이 아닐경우
+            navigate("/");
           } else {
-            //로그인 함
-            if (adminRoute && !res.data.isAdmin) {
-              //로그인하고 어드민 페이지 접속, 그런데 어드민 계정이 아닐경우
+            if (option === false) {
+              //로그인하고 로그인 안한사람용 페이지에 들어가려할때
               navigate("/");
-            } else {
-              if (option === false) {
-                //로그인하고 로그인 안한사람용 페이지에 들어가려할때
-                navigate("/");
-              }
             }
           }
         }
-        console.log("++++++탈주++++++");
       });
     }, []);
     return <ChildComponent {...props} />; //문제의 구간 ++++++++++++++
   }
-  console.log("++++++??++++++");
   return AuthCheck; //<AuthCheck/>
 };
 export default Auth;

@@ -69,5 +69,4 @@ function LoginPage() {
     </div>
   );
 }
-//loginpage.js++++++
-export default Auth(LoginPage, null); //LoginPage
+export default Auth(LoginPage, false); //LoginPage
