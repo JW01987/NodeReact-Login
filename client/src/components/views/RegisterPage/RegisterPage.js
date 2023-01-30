@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../../../App.css";
 import Auth from "../../../hoc/auth";
+import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -49,36 +51,104 @@ function RegisterPage() {
     });
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <form style={{ display: "flex", flexDirection: "column" }}>
-        <label>이메일</label>
-        <input type="eamil" value={email} onChange={onEmailHandler} />
-
-        <label>이름</label>
-        <input type="text" value={name} onChange={onNameHandler} />
-
-        <label>비밀번호</label>
-        <input type="text" value={password} onChange={onPasswordHandler} />
-
-        <label>비밀번호 확인</label>
-        <input
-          type="text"
-          value={confirmPassword}
-          onChange={onConfirmPasswordHandler}
-        />
-        <hr />
-        <button onClick={onSubmitHandler}>Login</button>
+    <div className="main_div">
+      <form>
+        <div
+          style={{
+            fontSize: "1.6em",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingRight: "1em",
+              }}
+            >
+              <label className="label" for="eamil">
+                이메일
+              </label>
+              <input id="eamil" value={email} onChange={onEmailHandler} />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <label className="label" for="name">
+                이름
+              </label>
+              <input id="name" value={name} onChange={onNameHandler} />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <label className="label" for="password">
+                비밀번호
+              </label>
+              <input
+                id="password"
+                value={password}
+                onChange={onPasswordHandler}
+                type="password"
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <label className="label" for="confirmPassword">
+                비밀번호 확인
+              </label>
+              <input
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={onConfirmPasswordHandler}
+                type="password"
+              />
+            </div>
+          </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            style={{
+              width: "80%",
+              padding: "0.5em",
+              marginTop: "1em",
+            }}
+            className="btn"
+            onClick={onSubmitHandler}
+          >
+            가입하기
+          </button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default Auth(RegisterPage, false);
+export default Auth(RegisterPage, null);

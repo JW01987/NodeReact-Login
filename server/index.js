@@ -21,10 +21,6 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-app.get("/api/hello", (req, res) => {
-  res.send("요기는 백엔드다 꺄르륵");
-});
-
 app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
   user.save((e, userInfo) => {
@@ -68,16 +64,17 @@ app.get("/api/users/auth", auth, (req, res) => {
     role: req.user.role,
     isAuth: true,
     image: req.user.image,
+    isAdmin: req.user.role === 0 ? false : true,
   });
 });
 
 app.get("/api/users/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-    console.log(user, err);
     if (err) return res.json({ sucsses: false, err });
     return res.status(200).send({ sucsses: true });
   });
 });
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

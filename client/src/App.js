@@ -7,9 +7,17 @@ import RegisterPage from "./components/views/RegisterPage/RegisterPage";
 
 function App() {
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifycontent: "center",
+        alignitems: "center",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route exact path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
